@@ -5,3 +5,6 @@ INSERT INTO burgers (burger_name, devoured) values
     ("Bill's Bucktooth Burger", FALSE),
     ("The Humbugger", FALSE);
 
+UPDATE burgers SET devoured = FALSE WHERE burgers.id = 1;
+
+SELECT * FROM burgers 
