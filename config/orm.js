@@ -2,24 +2,27 @@ const connection = require("connection.js");
 
 var orm = {
     //select All the objects in mySQL
-    selectAll: function () {
-        let queryString = "SELECT * FROM burgers"
+    selectAll (tableInput) {
+        let queryString = `SELECT * FROM ${tableInput};`
         connection.query(queryString, (error, results) => {
             // rewrite error message to data not found 
             if (error) throw error;
             //what am I doing with the query response?  
             console.log(results);
+            return results
         })
     },
 
     //Insert one object at a time into the mysql
-    insertOne: function (burgerName, wasItDevoured) {
-        let queryString = "INSERT INTO burgers (burger_name, devoured) values (?, ?)"
+    insertOne (tableInput, burgerName, wasItDevoured) {
+        let queryString = `INSERT INTO ${tableInput} (burger_name, devoured) values (?, ?)`
         connection.query(queryString,[burgerName, wasItDevoured], (error, results) => {
             // rewrite error message to data not found 
             if (error) throw error;
             //what am I doing with the query response?  
                 console.log(results);
+                return results
+            //code to send data to the user unsure of how to do this?  Talk to Trent once all the files are setup.
             })
         },
 
@@ -32,6 +35,8 @@ var orm = {
             if (error) throw error;
             //what am I doing with the query response?  
                 console.log(results);
+                return results
+            //code to update the corresponding burger with the new devoured value thus changing its position on the page.
             })
     }
 };
