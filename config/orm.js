@@ -1,8 +1,8 @@
 const connection = require("../config/connection");
 
-var orm = {
+const orm = {
     //select All the objects in mySQL
-    selectAll (tableInput) {
+    all: function(tableInput) {
         let queryString = `SELECT * FROM ${tableInput};`
         connection.query(queryString, (error, results) => {
             // rewrite error message to data not found 
@@ -14,7 +14,7 @@ var orm = {
     },
 
     //Insert one object at a time into the mysql
-    insertOne (tableInput, burgerName, wasItDevoured) {
+    create: function(tableInput, burgerName, wasItDevoured) {
         let queryString = `INSERT INTO ${tableInput} (burger_name, devoured) values (?, ?)`
         connection.query(queryString,[burgerName, wasItDevoured], (error, results) => {
             // rewrite error message to data not found 
@@ -27,7 +27,7 @@ var orm = {
         },
 
     // update the mysql folder one at a time
-    updateOne (wasItDevoured, burgerIdListNumber) {
+    update: function(wasItDevoured, burgerIdListNumber) {
         let queryString = "UPDATE burgers SET devoured = ? WHERE burgers.id = ?"
         connection.query(queryString,[wasItDevoured, burgerIdListNumber], (error, results) => {
             

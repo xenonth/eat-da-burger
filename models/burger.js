@@ -1,22 +1,22 @@
-let orm = require("../config/orm.js");
+const orm = require("../config/orm");
 
 //code which calls the orm functions
-let burger = {
+const burger = {
     //call
-    all: function (callback) {
-        orm.selectAll("burgers,", function(result) {
-            callback(result);
+    all: function(cb) {
+        orm.all("burgers", function(res) {
+            cb(res);
         });
-    
+
     },
         //code to list data Items in a list or push into an array?,
     
     create: function(burgerName) {
-        orm.insertOne("burgers", burgerName, false);
+        orm.create("burgers", burgerName, false);
     },
     //Should update the boolean value of the burger from true to false and vice versa
     update: function(eatenState, burgerIdListNumber) {
-        orm.updateOne(eatenState, burgerIdListNumber);
+        orm.update(eatenState, burgerIdListNumber);
     }
 }
 

@@ -9,14 +9,14 @@ const burger = require ("../models/burger");
 
 //need to do something about a isEaten variable
 
-router.get("/", (req, res) =>{
-    burger.all(function (data) {
-        let burgerList = {
+router.get("/", function(req, res) {
+    burger.all(function(data) {
+        let burgerObject = {
             burgers: data
         };
-        console.log(burgerList);
+        console.log(burgerObject);
 
-        res.render("index", burgerList)
+        res.render("index", burgerObject)
     });
 });
 
