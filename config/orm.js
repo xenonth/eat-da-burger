@@ -1,4 +1,4 @@
-const connection = require("connection.js");
+const connection = require("../config/connection");
 
 var orm = {
     //select All the objects in mySQL
