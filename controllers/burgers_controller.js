@@ -10,7 +10,8 @@ const burger = require ("../models/burger.js");
 //need to do something about a isEaten variable
 
 router.get("/", function(req, res) {
-    burger.all(function(data) {
+    
+   burger.all(function(data) {
         let burgerObject = {
             burgers: data
         }
@@ -22,17 +23,18 @@ router.get("/", function(req, res) {
 
 //posting to the database
 router.post("/api/burgers", (req, res) => {
-    burger.create([
+   res.json (burger.create([
         "burger_name"
     ], [
             req.body.burger_name
         ], function (result) {
             res.json({ id: result.insertId });
-        });
+        }))
 });
 
 router.put("/api/burgers/:id", (req, res) => {
     let condition = `id = ${req.params.id}`;
+    console.log(req.params.id)
     
     console.log("condition", condition);
 

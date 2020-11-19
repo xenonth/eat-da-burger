@@ -5,7 +5,7 @@ const burger = {
     //call
     all: function(cb) {
         orm.all("burgers", function(res) {
-            cb(res);
+            return res;
         });
 
     },
@@ -19,7 +19,7 @@ const burger = {
 
         orm.update(objColVals, condition, cb, (res) => {
 
-            cb(res)
+            return res
         
         });
     }

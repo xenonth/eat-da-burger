@@ -1,6 +1,7 @@
 //code to wait for DOM to load before anything happens
-    $(function () {
+    
         $(".change-devoured").on("click", (event) => {
+            event.preventDefault();
             let id = $(this).data("id");
             let isItEaten = $(this).data("newDevoured");
 
@@ -24,7 +25,7 @@
             event.preventDefault();
 
             let newBurger = {
-                burger_name: $("#yum").val().trim(),
+                burger_name: $(".yum").val().trim(),
             };
 
             //Post REquest for database to upload new data
@@ -33,7 +34,6 @@
                 data: newBurger
             }).then(() => {
                 console.log("New Burger Created")
-                location.reload();
+
             })
         })
-    })
