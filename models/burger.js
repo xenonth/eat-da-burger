@@ -1,4 +1,4 @@
-const orm = require("../config/orm");
+const orm = require("../config/orm.js");
 
 //code which calls the orm functions
 const burger = {
@@ -15,9 +15,14 @@ const burger = {
         orm.create("burgers", burgerName, false);
     },
     //Should update the boolean value of the burger from true to false and vice versa
-    update: function(eatenState, burgerIdListNumber) {
-        orm.update(eatenState, burgerIdListNumber);
+    update: function(objColVals, condition, cb) {
+
+        orm.update(objColVals, condition, cb, (res) => {
+
+            cb(res)
+        
+        });
     }
 }
 
-module.export = burger;
+module.exports = burger;

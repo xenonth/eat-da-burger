@@ -1,35 +1,50 @@
+<body class="container-fluid">
 <section>
   <h2 class="text-center">EAT IT! YOU WANT TO EATS IT!</h2>
 </section>
 
 <!--INPUT Field to add more burgers to the list, with button linked to insert Query-->
-<section>
-  <h3>Burgers to Devour:</h3>
+<div class = "row">
+  <section class = "col-sm-2"></section>
+<section class="col-sm-8">
   <form class="create-form">
     <article class="form-group">
-      <label for="yum">Burger</label><br>
-      <input type="radio" name="yum">
+      <label for="yum">Burger TO CONSUME</label>
+      <input type="text" id="yum" name="name">
     </article>
 
-    <button type = "submit">To Devour</button>
+    <button type = "submit">To CONSUME</button>
   </form>
 </section>
+</div>
+
+<div class="row">
+<section class="col-sm-1"></section>
 
 <!--Burger list of each uneaten burger-->
-<ul>
-  {{#each burgers}}
-    {{#unless devoured}}
-      <li>{{burger_name}}</li>>
-    {{/unless}}
-  {{/each}}
+<section class ="col-sm-4">
+  <h4>Burgers To CONSUME!</h4>
+  <ul>
+      {{#each burgers}}
+        {{#unless devoured}}
+              {{>burgers/burger-block devoured=false}}
+        {{/unless}}
+      {{/each}}
 </ul>
+</section>
 
+<section class="col-sm-1"></section>
 <!--Burger list of each eaten burger-->
-<h3>Burgers Which have been consumed</h3>
-<ul>
-  {{#each burgers}}
-    {{#if devoured}}
-      {{> burgers/burger-block devoured=true}}
-    {{/if}}
-  {{/each}}
-</ul>
+<section class ="col-sm-4">
+  <h3>Burgers Which have been CONSUMED!</h3>  
+  <ul>
+    {{#each burgers}}
+      {{#if devoured}}
+        {{> burgers/burger-block devoured=true}}  
+      {{/if}}
+    {{/each}}
+  </ul>
+</section>
+
+</div>
+</body>

@@ -4,7 +4,7 @@ const exphbs = require("express-handlebars");
 
 const routes = require("./controllers/burgers_controller.js");
 
-const PORT = process.env.PORT || 8080;
+const PORT = process.env.PORT || 3001;
 
 const app = express();
 //serve static contetnt for the app from the public directory.
