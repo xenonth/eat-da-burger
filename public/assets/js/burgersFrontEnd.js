@@ -25,8 +25,6 @@
 
             let newBurger = {
                 burger_name: $("#yum").val().trim(),
-                devoured: false
-
             };
 
             //Post REquest for database to upload new data
