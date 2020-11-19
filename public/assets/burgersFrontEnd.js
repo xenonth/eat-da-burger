@@ -30,5 +30,12 @@
             };
 
             //Post REquest for database to upload new data
+            $.ajax("/api/burgers", {
+                type: "POST",
+                data: newBurger
+            }).then(() => {
+                console.log("New Burger Created")
+                location.reload();
+            })
         })
     })
