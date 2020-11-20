@@ -21,7 +21,7 @@ router.get("/index", function(req, res) {
         }
 
         res.render("index", burgerObject)
-    });
+    })
 });
 
 //posting to the database
