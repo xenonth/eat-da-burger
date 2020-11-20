@@ -12,6 +12,8 @@ const PORT = process.env.PORT || 3001;
 
 const app = express();
 //serve static contetnt for the app from the public directory.
+//using/accessing routes file
+app.use(express.static(path.join(__dirname, '/public')));
 
 //Parse Application body as JSON
 app.use(express.urlencoded({ extended: true }));
@@ -21,8 +23,7 @@ app.use(express.json());
 app.engine("handlebars", exphbs({ defaultLayout: "main" }));
 app.set("view engine", "handlebars");
 
-//using/accessing routes file
-app.use(express.static(path.join(__dirname, '/public')));
+
 
 app.use(routes);
 

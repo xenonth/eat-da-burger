@@ -1,39 +1,53 @@
-//code to wait for DOM to load before anything happens
-    
-        $(".change-devoured").on("click", (event) => {
-            event.preventDefault();
-            let id = $(this).data("id");
-            let isItEaten = $(this).data("newDevoured");
+$(function () {
+    $(".change-devoured").on("click", function (event) {
+        event.preventDefault();
 
-            let newEatenState = {
-                devoured: isItEaten
-            };
+        let id = $(this).data("id");
 
-            //sen the PUT request
+        if ($(this).data("devoured") === 0){
+           devoured = true
+        } else {
+            devoured = false
+        }
+     
+        console.log(devoured);
 
-            $.ajax(`/api/burgers/ ${id}`, {
-                type: "PUT",
-                data: newEatenState
-            }).then(() => {
-                console.log(`newDevouredState is ${newEatenState}`)
-                //reload page for updated list
+        console.log(id);
+
+        let newDevoured = {
+            devoured: devoured
+        };
+
+        $.ajax(`/api/burgers/${id}`, {
+            type: "PUT",
+            data: newDevoured
+        }).then(
+            function () {
+                console.log("changed devoured status to ", devoured);
                 location.reload();
-            });
-        });
+            }
+        );
+    });
 
-        $(".create-form").on("submit", (event) => {
-            event.preventDefault();
+    $(".create-form").on("submit", function (event) {
+        event.preventDefault();
 
-            let newBurger = {
-                burger_name: $(".yum").val().trim(),
-            };
+        var newBurger = {
+            burger_name: $("#yum").val(),
+            devoured: $("[name=devoured]:checked").val()
+        };
 
-            //Post REquest for database to upload new data
-            $.ajax("/api/burgers", {
-                type: "POST",
-                data: newBurger
-            }).then(() => {
-                console.log("New Burger Created")
+        // Send the POST request.
+        $.ajax("/api/burgers", {
+            type: "POST",
+            data: newBurger
+        }).then(
+            function () {
+                console.log("created new burger on the menu");
+                // Reload the page to get the updated list
+                location.reload();
+            }
+        );
+    });
 
-            })
-        })
+});

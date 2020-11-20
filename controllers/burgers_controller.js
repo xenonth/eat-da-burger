@@ -1,6 +1,6 @@
 //DEPENDENCY VARIABLES
 const express = require ("express");
-let router = express.Router();
+const router = express.Router();
 
 //local Module variables
 const burger = require ("../models/burger.js");
@@ -9,13 +9,16 @@ const burger = require ("../models/burger.js");
 
 //need to do something about a isEaten variable
 
-router.get("/", function(req, res) {
+router.get('/', function (req, res) {
+    res.redirect('/index');
+  });
+
+router.get("/index", function(req, res) {
     
    burger.all(function(data) {
         let burgerObject = {
             burgers: data
         }
-        console.log(burgerObject);
 
         res.render("index", burgerObject)
     });
