@@ -5,7 +5,7 @@ if (process.env.JAWSDB_URL) {
   connection = mysql.createConnection(JAWSDB_URL)
 } else {
 
-let connection = mysql.createConnection({
+connection = mysql.createConnection({
     host: "localhost",
   
     // Your port; if not 3306

@@ -28,7 +28,7 @@ const orm = {
 
     // update the mysql folder one at a time
     update: function(wasItDevoured, burgerIdListNumber, cb) {
-        let queryString = "UPDATE burgers SET devoured = ? WHERE burgers.id = ?"
+        let queryString = "UPDATE burgers SET ? WHERE burgers.?"
         connection.query(queryString,[wasItDevoured, burgerIdListNumber], function(error, results) {
             
             // rewrite error message to data not found 

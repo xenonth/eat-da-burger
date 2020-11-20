@@ -11,7 +11,7 @@ const burger = {
     },
         //code to list data Items in a list or push into an array?,
     
-    create: function(burgerName, cb) {
+    create: function(cb) {
         orm.create("burgers", burgerName, false, function(res) {
             cb(res)
         });
