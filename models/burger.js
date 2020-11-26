@@ -11,15 +11,15 @@ const burger = {
     },
         //code to list data Items in a list or push into an array?,
     
-    create: function(cb) {
-        orm.create("burgers", burgerName, false, function(res) {
+    create: function(burgerName, cb) {
+        orm.create(burgerName, false, function(res) {
             cb(res)
         });
     },
     //Should update the boolean value of the burger from true to false and vice versa
-    update: function(objColVals, condition, cb) {
+    update: function( condition, objColVals, cb) {
 
-        orm.update(objColVals, condition, function(res) {
+        orm.update(condition, objColVals, function(res) {
             cb(res);
         }
     )}

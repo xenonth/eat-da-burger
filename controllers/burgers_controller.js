@@ -27,22 +27,22 @@ router.get("/index", function(req, res) {
 //posting to the database
 router.post("/api/burgers", (req, res) => {
    res.json (burger.create([
-        "burger_name"
-    ], [
             req.body.burger_name
-        ], function (result) {
+        ], 
+            function (result) {
             res.json({ id: result.insertId });
         }))
 });
 
 router.put("/api/burgers/:id", (req, res) => {
-    let condition = `id = ${req.params.id}`;
+    let condition = parseInt(req.params.id);
     console.log(req.params.id)
+
     
     console.log("condition", condition);
 
     burger.update({
-        devoured: req.body.devoured
+        devoured: true
     }, condition, (result) => {
         if (result.changedRows == 0) {
 

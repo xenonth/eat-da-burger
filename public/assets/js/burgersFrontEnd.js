@@ -4,15 +4,13 @@ $(function () {
 
         let id = $(this).data("id");
 
-        if ($(this).data("devoured") === 0){
+        if ($(this).data("devoured") === false) {
            devoured = true
         } else {
             devoured = false
         }
      
         console.log(devoured);
-
-        console.log(id);
 
         let newDevoured = {
             devoured: devoured
@@ -47,7 +45,7 @@ $(function () {
                 // Reload the page to get the updated list
                 location.reload();
             }
-        );
+        )
     });
 
 });
