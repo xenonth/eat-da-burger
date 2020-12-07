@@ -79,21 +79,6 @@ const orm = {
             cb(result);
         });
     },
-    // Delete a burger from the db.
-    deleteOne: function(table, condition, cb) {
-        var queryString = "DELETE FROM " + table;
-        queryString += " WHERE ";
-        queryString += condition;
-
-        console.log(queryString);
-
-        connection.query(queryString, function(err, result) {
-            if (err) {
-                throw err
-            }
-            cb(result);
-        });
-    }
 };
 
 // Export the ORM object in module.exports.

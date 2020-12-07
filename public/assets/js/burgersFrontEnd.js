@@ -21,9 +21,11 @@ $(function() {
         });
     });
 
-    $(".change-devoured").on("click", function(event) {
+    //change the devoured state to true{1}
+    $(".devouredBecomesTrue").on("click", function(event) {
         event.preventDefault();
 
+        //burger id in table
         let id = $(this).data("id");
         let devouredState = {
             devoured: 1
@@ -37,18 +39,26 @@ $(function() {
             console.log("Burger devoured");
             location.reload();
         });
+        
+        //change the state to false{0} however is not rendering or working correctly
+        $(".devouredBecomesFalse").on("click", function(event) {
+            event.preventDefault();
+            
+            //burger id in table
+            let id = $(this).data("id");
+
+            let devouredState = {
+                devoured: 0
+            };
+    
+            // Send the PUT request.
+            $.ajax("/api/burgers/" + id, {
+                type: "POST",
+                data: devouredState
+            }).then(function() {
+                console.log("Consume burger");
+                location.reload();
+            });
+        });
     });
-
-    $(".trashburger").on("click", function(event) {
-        event.preventDefault();
-
-        let id = $(this).data("id");
-
-        // Send the DELETE request.
-        $.ajax({
-            type: "DELETE",
-            url: "/api/burgers/" + id
-        }).then(location.reload());
-    });
-
 })
