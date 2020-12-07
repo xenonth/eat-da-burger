@@ -26,7 +26,7 @@
   <h4>Burgers To CONSUME!</h4>
   <ul>
       {{#each burgers}}
-        {{#unless devoured}}
+        {{#unless this.devoured}}
               {{>burgers/burger-block devoured=false}}
         {{/unless}}
       {{/each}}
@@ -38,8 +38,8 @@
 <section class ="col-sm-4">
   <h3>Burgers Which have been CONSUMED!</h3>  
   <ul>
-    {{#each burgers}}
-      {{#if devoured}}
+    {{#each this.burgers}}
+      {{#if this.devoured}}
         {{> burgers/burger-block devoured=true}}  
       {{/if}}
     {{/each}}

@@ -1,51 +1,37 @@
-//DEPENDENCY VARIABLES
-const express = require ("express");
+// Dependencies
+const express = require("express");
+
+// Import the model to use its db functions for burger.js
+const burger = require("../models/burger.js");
+
+// Create the router for the app, and export the router at the end of your file.
 const router = express.Router();
-
-//local Module variables
-const burger = require ("../models/burger.js");
-
-//retrieving and displaying burger data to the index page
-
-//need to do something about a isEaten variable
-
-router.get('/', function (req, res) {
-    res.redirect('/index');
-  });
-
-router.get("/index", function(req, res) {
-    
-   burger.all(function(data) {
-        let burgerObject = {
+// Create routes and set up logic where required.
+router.get("/", function (req, res) {
+    burger.display(function(data) {
+        let hbsObject = {
             burgers: data
-        }
-
-        res.render("index", burgerObject)
-    })
+        };
+        console.log(hbsObject);
+        res.render("index", hbsObject);
+    });
 });
-
-//posting to the database
-router.post("/api/burgers", (req, res) => {
-   res.json (burger.create([
-            req.body.burger_name
-        ], 
-            function (result) {
-            res.json({ id: result.insertId });
-        }))
+// Add new burger to the db.
+router.post("/api/burgers", function (req, res) {
+    burger.create(["burger_name", "devoured"], [req.body.burger_name, req.body.devoured], function(result) {
+        // Send back the ID of the new burger
+        res.json({ id: result.insertId });
+    });
 });
+// Set burger devoured status to true.
+router.put("/api/burgers/:id", function(req, res) {
+    let condition = "id = " + req.params.id;
 
-router.put("/api/burgers/:id", (req, res) => {
-    let condition = parseInt(req.params.id);
-    console.log(req.params.id)
-
-    
     console.log("condition", condition);
 
-    burger.update({
-        devoured: true
-    }, condition, (result) => {
-        if (result.changedRows == 0) {
-
+    burger.update({ devoured: req.body.devoured }, condition, function(result) {
+        if (result.changedRows === 0) {
+            // If no rows were changed, then the ID must not exist, so 404.
             return res.status(404).end();
         } else {
             res.status(200).end();
@@ -53,7 +39,5 @@ router.put("/api/burgers/:id", (req, res) => {
     });
 });
 
-
-//route to update the boolean value? Come back to it after the handlebar
 
 module.exports = router;

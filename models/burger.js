@@ -1,29 +1,27 @@
+// Import orm.js into burger.js
 const orm = require("../config/orm.js");
-
-//code which calls the orm functions
+// The code that will call the ORM functions using burger specific input for the ORM.
 const burger = {
-    //call
-    all: function(cb) {
+    // Display all burgers in the db.
+    display: function(cb) {
         orm.all("burgers", function(res) {
             cb(res);
         });
-
     },
-        //code to list data Items in a list or push into an array?,
-    
-    create: function(burgerName, cb) {
-        orm.create(burgerName, false, function(res) {
-            cb(res)
+    // Add a new burger to the db.
+    create: function(cols, vals, cb) {
+        orm.create("burgers", cols, vals, function(res) {
+            cb(res);
         });
     },
-    //Should update the boolean value of the burger from true to false and vice versa
-    update: function( condition, objColVals, cb) {
-
-        orm.update(condition, objColVals, function(res) {
+    // Change the devoured status to true.
+    update: function(objColVals, condition, cb) {
+        orm.update("burgers", objColVals, condition, function(res) {
             cb(res);
-        }
-    )}
+        });
+    },
 }
+
 
 
 module.exports = burger;

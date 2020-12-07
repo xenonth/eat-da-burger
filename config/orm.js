@@ -1,46 +1,101 @@
-const connection = require("./connection.js");
+// import connection file
+const connection = require("../config/connection.js");
+
+// Helper function for SQL syntax. copied and paste from cat homework
+function printQuestionMarks(num) {
+    var arr = [];
+    for (var i = 0; i < num; i++) {
+        arr.push("?");
+    }
+    return arr.toString();
+}
+
+// Helper function to convert object key/value pairs to SQL syntax
+function objToSql(ob) {
+    var arr = [];
+    // loop through the keys and push the key/value as a string int arr
+    for (var key in ob) {
+        var value = ob[key];
+        // check to skip hidden properties
+        if (Object.hasOwnProperty.call(ob, key)) {
+            // if string with spaces, add quotations (Lana Del Grey => 'Lana Del Grey')
+            if (typeof value === "string" && value.indexOf(" ") >= 0) {
+                value = "'" + value + "'";
+            }
+            // e.g. {name: 'Lana Del Grey'} => ["name='Lana Del Grey'"]
+            // e.g. {sleepy: true} => ["sleepy=true"]
+            arr.push(key + "=" + value);
+        }
+    }
+    // translate array of strings to a single comma-separated string
+    return arr.toString();
+}
 
 const orm = {
-    //select All the objects in mySQL
-    all: function(tableInput, cb) {
-        let queryString = `SELECT * FROM ${tableInput};`
-        connection.query(queryString, function(error, results) {
-            // rewrite error message to data not found 
-            if (error) {throw error}
-            //what am I doing with the query response?  
-            console.log(results);
-            cb(results)
-        })
+    // Display all burgers in the db.
+    all: function(table, cb) {
+        let queryString = `SELECT * FROM ${table}`;
+
+        connection.query(queryString, function(err, result) {
+            if (err) {
+                throw err;
+            }
+            cb(result);
+        });
     },
+    // Add a burger to the db.
+    create: function(table, cols, vals, cb) {
+        var queryString = "INSERT INTO " + table;
+        queryString += " (";
+        queryString += cols.toString();
+        queryString += ") ";
+        queryString += "VALUES (";
+        queryString += printQuestionMarks(vals.length);
+        queryString += ") ";
 
-    //Insert one object at a time into the mysql
-    create: function(burgerName, wasItDevoured, cb) {
-        // somehow rewrite the string but I don't get how I am suppose to do that!
-        let queryString = `INSERT INTO burgers (burger_name, devoured) values (?, ?)`
-        connection.query(queryString,[burgerName, wasItDevoured], function(error, results) {
-            // rewrite error message to data not found 
-            if (error) {throw error}
-            //what am I doing with the query response?  
-                console.log(results);
-            cb(results)
-            //code to send data to the user unsure of how to do this?  Talk to Trent once all the files are setup.
-            })
-        },
+        console.log(queryString);
 
-    // update the mysql folder one at a time
-    update: function(wasItDevoured, burgerIdListNumber, cb) {
-        //Somehow rewrite the string so there is no error I am unsure how to do this.
-        let queryString = "UPDATE burgers SET devoured = ? WHERE id =?"
-        connection.query(queryString, [wasItDevoured, burgerIdListNumber], function(error, results) {
-            
-            // rewrite error message to data not found 
-            if (error) {throw error}
-            //what am I doing with the query response?  
-                console.log(results);
-                cb(results)
-            //code to update the corresponding burger with the new devoured value thus changing its position on the page.
-            })
+        connection.query(queryString, vals, function(err, result) {
+            if (err) {
+                throw err
+            }
+            cb(result);
+        });
+    },
+    // Set burger devoured status to true.
+    update: function(table, objColVals, condition, cb) {
+        var queryString = "UPDATE " + table;
+        queryString += " SET ";
+        queryString += objToSql(objColVals);
+        queryString += " WHERE ";
+        queryString += condition;
+
+        console.log(queryString);
+
+        connection.query(queryString, function(err, result) {
+            if (err) {
+                throw err
+            }
+            cb(result);
+        });
+    },
+    // Delete a burger from the db.
+    deleteOne: function(table, condition, cb) {
+        var queryString = "DELETE FROM " + table;
+        queryString += " WHERE ";
+        queryString += condition;
+
+        console.log(queryString);
+
+        connection.query(queryString, function(err, result) {
+            if (err) {
+                throw err
+            }
+            cb(result);
+        });
     }
 };
 
+// Export the ORM object in module.exports.
 module.exports = orm;
+
