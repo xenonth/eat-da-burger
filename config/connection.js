@@ -1,9 +1,11 @@
 const mysql = require("mysql");
 
-const connection;
+let connection;
 
 if (process.env.JAWSDB_URL) {
-  connection = mysql.createConnection(JAWSDB_URL)
+
+ connection = mysql.createConnection(process.env.JAWSDB_URL)
+
 } else {
 
 connection = mysql.createConnection({
@@ -19,6 +21,8 @@ connection = mysql.createConnection({
     password: "alpha",
     database: "burgers_DB"
   });
+
+
 }
 
 // Make connection to local database.
