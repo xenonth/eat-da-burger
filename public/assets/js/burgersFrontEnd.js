@@ -43,7 +43,7 @@ $(function() {
         //change the state to false{0} however is not rendering or working correctly
         $(".devouredBecomesFalse").on("click", function(event) {
             event.preventDefault();
-            
+            console.log("consume again pressed")
             //burger id in table
             let id = $(this).data("id");
 
@@ -53,7 +53,7 @@ $(function() {
     
             // Send the PUT request.
             $.ajax("/api/burgers/" + id, {
-                type: "POST",
+                type: "PUT",
                 data: devouredState
             }).then(function() {
                 console.log("Consume burger");
